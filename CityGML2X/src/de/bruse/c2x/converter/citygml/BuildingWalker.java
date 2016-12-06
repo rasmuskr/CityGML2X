@@ -83,17 +83,25 @@ public class BuildingWalker extends FeatureWalker {
 		super.visit(abstractBuilding);
 		this.abstractBuilding = abstractBuilding;
 		if (geometryTypeSet.contains(GeometryType.SOLID)) {
-			if (lodSet.contains(LevelOfDetail.LOD2) && abstractBuilding.isSetLod2Solid()) {
+			if (lodSet.contains(LevelOfDetail.LOD4) && abstractBuilding.isSetLod4Solid()) {
+				traversePolygons(abstractBuilding.getLod4Solid().getSolid());
+			} else if (lodSet.contains(LevelOfDetail.LOD3) && abstractBuilding.isSetLod3Solid()) {
+				traversePolygons(abstractBuilding.getLod3Solid().getSolid());
+			} else if (lodSet.contains(LevelOfDetail.LOD2) && abstractBuilding.isSetLod2Solid()) {
 				traversePolygons(abstractBuilding.getLod2Solid().getSolid());
 			} else if (lodSet.contains(LevelOfDetail.LOD1) && abstractBuilding.isSetLod1Solid()) {
 				traversePolygons(abstractBuilding.getLod1Solid().getSolid());
-			} 			
+			}
 		} else if (geometryTypeSet.contains(GeometryType.MULTI_SURFACE)) {
 			if (abstractBuilding.isSetBoundedBySurface()) {
 				traverseBoundarySurfaces(abstractBuilding.getBoundedBySurface());
 			} else if (lodSet.contains(LevelOfDetail.LOD2) && abstractBuilding.isSetLod2MultiSurface()) {
 				traversePolygons(abstractBuilding.getLod2MultiSurface().getMultiSurface());
-			}			
+			} else if (lodSet.contains(LevelOfDetail.LOD3) && abstractBuilding.isSetLod3MultiSurface()) {
+				traversePolygons(abstractBuilding.getLod3MultiSurface().getMultiSurface());
+			} else if (lodSet.contains(LevelOfDetail.LOD4) && abstractBuilding.isSetLod4MultiSurface()) {
+				traversePolygons(abstractBuilding.getLod4MultiSurface().getMultiSurface());
+			}
 		}
 	}
 

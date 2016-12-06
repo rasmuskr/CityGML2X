@@ -22,6 +22,8 @@ package de.bruse.c2x.converter.citygml;
 public enum LevelOfDetail {
 
 	LOD1,
-	LOD2
+	LOD2,
+	LOD3,
+	LOD4
 	
 }

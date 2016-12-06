@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="dist" name="Build the library">
-	<property name="version" value="0.1-rc1" />
+	<property name="version" value="0.1-rc2" />
 	<property name="base" location="../CityGML2X" />
 	<property name="src" location="src" />
 	<property name="res" location="res" />
@@ -28,10 +28,29 @@
 			classpathref="classpath" 
 			encoding="UTF-8" />
 	</target>
-	<target name="dist" depends="compile">
+
+	<target name="copy-dependencies">
+
+		<mkdir dir="${destination}/build" />
+
+		<jar jarfile="${destination}/build/dependencies-all.jar">
+			<zipgroupfileset dir="${lib}">
+				<include name="*.jar" />
+			</zipgroupfileset>
+			<zipgroupfileset dir="${base}/lib">
+				<include name="*.jar" />
+			</zipgroupfileset>
+		</jar>
+
+	</target>
+
+	<target name="dist" depends="compile, copy-dependencies">
 		<mkdir dir="${destination}/build" />
 		<jar destfile="${destination}/build/c2x-${version}.jar">
 			<fileset dir="${bin}" />
+			<fileset dir="${base}/res" />
+			<zipfileset src="${destination}/build/dependencies-all.jar"
+						excludes="META-INF/*.SF" />
 			<manifest>
 				<attribute name="Main-Class" value="de.bruse.c2x.cli.Main" />
 				<attribute name="Class-Path" value="." />
